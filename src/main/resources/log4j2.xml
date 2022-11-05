@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+    <!-- <Properties>
+        <Property name="LOG_PATTERN">%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1} - %m%n</Property>
+        <Property name="filename">.logs</Property>
+    </Properties> -->
+ 
+    <Appenders>        
+        <Console name="console" target="SYSTEM_OUT" follow="true">            
+            <PatternLayout>
+                <pattern>%d %m%n</pattern>
+            </PatternLayout>
+        </Console>
+
+        <RollingFile name="RollingFile"
+            fileName="./logs/MyLogFile.log"
+            filePattern="./logs/$${date:yyyy-MM}/MyLogFile-%d{-dd-MMMM-yyyy}.log">
+            <PatternLayout>
+                <!-- basit loglama -->
+                <pattern>%d %m%n</pattern>
+                <!-- detayli loglama -->
+                <!-- <pattern>%d %p %C{1.} [%t] %m%n</pattern> -->
+            </PatternLayout>
+            <Policies>
+                <!-- rollover on startup, daily and when the file reaches 10 MegaBytes -->
+                <OnStartupTriggeringPolicy />
+                <SizeBasedTriggeringPolicy size="10 MB" />
+                <TimeBasedTriggeringPolicy />
+            </Policies>
+        </RollingFile>                
+    </Appenders>
+     
+    <Loggers>        
+        <Root level="info">
+            <AppenderRef ref="console"/>
+            <AppenderRef ref="RollingFile"/>
+        </Root>
+
+        <Logger name="com.oziteknoloji.webapi" level="info"></Logger>
+    </Loggers>
+</Configuration>
